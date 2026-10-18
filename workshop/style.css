@@ -1,0 +1,84 @@
+/* Load the font. The path must be wrapped in url() */
+@font-face {
+    font-family: myFont;
+    src: url('Fonts/Patika-Medium.34b97a6c.woff2') format('woff2');
+}
+
+/* Use myFont for everything, including buttons */
+body, button {
+    font-family: myFont, cursive;
+}
+
+body {
+    /* Set a very light, clean background color */
+    background-color: #f9f9f9; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.sketch-page {
+    /* Define the page area */
+    width: 80%;
+    max-width: 700px;
+    min-height: 800px;
+    padding: 50px;
+    box-sizing: border-box;
+    
+    /* --- Clean Page Look --- */
+    background-color: #ff99ff; /* Pink page */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.text-block {
+    margin-bottom: 100px; /* Increased spacing */
+    text-align: center;   /* Centers the title and subtitle like your sketch */
+}
+
+.title {
+    font-size: 2.8em;
+    color: #222; /* Darker text for contrast */
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.subtitle {
+    font-size: 1.3em;
+    color: #555;
+}
+
+/* Styling the "START" Circle */
+.start-circle {
+    position: relative; /* Keeps the ::before ring inside the circle */
+    width: 250px;
+    height: 250px;
+    border: 3px dashed #333; /* Dashed line simulates a pencil sketch */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 3.5em; /* Bigger text for impact */
+    color: #333;
+    margin: 0 auto;
+}
+
+/* Subtle inner ring */
+.start-circle::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    pointer-events: none; /* Ensures clicks go through to the circle */
+}
+
+button {
+  font-family: myFont;
+}
