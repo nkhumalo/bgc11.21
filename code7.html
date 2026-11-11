@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 7</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="12" class="theme-green">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 7 of 8</p>
+            <h1>Test Your AI: Who Wrote It?</h1>
+            <p>Your model is trained! The AI you fixed on square 11 is running behind the scenes. It gives each teammate a score for how much a sentence "sounds like" them. The scores are negative numbers, and the one closest to zero wins.</p>
+            <p class="mission"><strong>Your mission:</strong> One teammate secretly types a brand new sentence between the quotes after <code>mystery =</code>. Everyone else guesses who wrote it, then click Run. Did the AI beat the humans? Take turns so every teammate gets tested.</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+# The AI model you fixed on square 11 is already loaded
+# and running behind the scenes. All you have to do is test it!
+
+# One teammate secretly types a NEW sentence between the quotes.
+# Everyone else: guess who wrote it BEFORE you click Run!
+mystery = "Write a mystery sentence here"
+
+guess_who_wrote(mystery)
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> Replace "Write a mystery sentence here" with a new sentence and keep the quotes at the start and end. Don't use a double quote mark (") inside your sentence. The sentence can't be one you already typed on square 10, because the AI should be tested on writing it has never seen.</p>
+    </div>
+
+<script type="text/plain" id="setup">
+import math
+from collections import Counter
+
+def get_tokens(text):
+    text = text.lower()
+    for mark in ".,!?;:":
+        text = text.replace(mark, " " + mark + " ")
+    return text.split()
+
+profiles = {}
+for name, samples in team_writing.items():
+    counts = Counter()
+    for sample in samples:
+        counts.update(get_tokens(sample))
+    profiles[name] = counts
+
+all_tokens = set()
+for counts in profiles.values():
+    all_tokens.update(counts)
+
+def voice_score(text, counts):
+    total = sum(counts.values())
+    score = 0
+    for token in get_tokens(text):
+        chance = (counts[token] + 1) / (total + len(all_tokens))
+        score = score + math.log(chance)
+    return score
+
+def guess_writer(text):
+    scores = {}
+    for name, counts in profiles.items():
+        scores[name] = voice_score(text, counts)
+    best = max(scores, key=scores.get)
+    return best, scores
+
+def guess_who_wrote(text):
+    best, scores = guess_writer(text)
+    print("Mystery sentence:", text)
+    print()
+    print("How much it sounds like each teammate (closest to zero wins):")
+    for name in sorted(scores, key=scores.get, reverse=True):
+        print("  ", name, ":", round(scores[name], 2))
+    print()
+    print("The AI thinks this was written by:", best)
+</script>
+
+<script type="text/plain" id="check">
+bool(mystery.strip() != "" and "mystery sentence here" not in mystery and all(mystery != s for samples in team_writing.values() for s in samples))
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

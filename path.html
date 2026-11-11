@@ -6,6 +6,23 @@
     <title>Game Board</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        .board-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+        }
+
+        .board-title {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .progress {
+            font-size: 1.3em;
+            margin: 10px 0 20px 0;
+        }
+
         /* The board is a grid: 7 columns across, 3 rows down */
         .board {
             display: grid;
@@ -13,48 +30,131 @@
             grid-template-rows: repeat(3, 100px);
             border: 3px solid black;
             padding: 30px;
-            background-color: #ff99ff; /* Matches the pink start page */
+            background-color: white;
         }
 
         .tile {
+            position: relative;
             border: 2px solid black;
-            background-color: white;
+            background-color: var(--light);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             font-size: 1.5em;
+            text-align: center;
+        }
+
+        .tile small {
+            font-size: 0.5em;
+            letter-spacing: 1px;
         }
 
         .start, .end {
-            color: #e0201b;
-            font-size: 1.2em;
-            background-color: #ffe8cc;
-            text-align: center;
+            background-color: black;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        /* Squares that open a quiz or coding challenge */
+        .quiz-tile, .end {
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .quiz-tile {
+            color: black;
+        }
+
+        .quiz-tile:hover {
+            background-color: var(--main);
+            transform: scale(1.05);
+        }
+
+        .end:hover {
+            background-color: #444;
+            transform: scale(1.05);
+        }
+
+        /* Finished squares fill in with the bright color and get a check mark */
+        .quiz-tile.done {
+            background-color: var(--main);
+        }
+
+        .quiz-tile.done::after {
+            content: "✓";
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            font-size: 0.8em;
+        }
+
+        .legend {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .reset-progress {
+            background: none;
+            border: none;
+            text-decoration: underline;
+            color: #555;
+            cursor: pointer;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <div class="board">
-        <!-- Bottom row: START, then left to right -->
-        <div class="tile start" style="grid-row: 3; grid-column: 1;">🌽<br>START</div>
-        <div class="tile" style="grid-row: 3; grid-column: 2;">1</div>
-        <div class="tile" style="grid-row: 3; grid-column: 3;">2</div>
-        <div class="tile" style="grid-row: 3; grid-column: 4;">3</div>
-        <div class="tile" style="grid-row: 3; grid-column: 5;">4</div>
-        <div class="tile" style="grid-row: 3; grid-column: 6;">5</div>
-        <div class="tile" style="grid-row: 3; grid-column: 7;">6</div>
+    <div class="board-page">
+        <h1 class="board-title">Code Your Voice Bonanza</h1>
+        <p class="progress" id="progress"></p>
 
-        <!-- Right side: going up -->
-        <div class="tile" style="grid-row: 2; grid-column: 7;">7</div>
+        <div class="board">
+            <!-- Bottom row: START, then left to right -->
+            <div class="tile start" style="grid-row: 3; grid-column: 1;">START</div>
+            <a class="tile quiz-tile theme-pink" data-level="1" href="quiz1.html" style="grid-row: 3; grid-column: 2;">1<small>QUIZ</small></a>
+            <a class="tile quiz-tile theme-green" data-level="2" href="quiz2.html" style="grid-row: 3; grid-column: 3;">2<small>QUIZ</small></a>
+            <a class="tile quiz-tile theme-blue" data-level="3" href="quiz3.html" style="grid-row: 3; grid-column: 4;">3<small>QUIZ</small></a>
+            <a class="tile quiz-tile theme-red" data-level="4" href="code1.html" style="grid-row: 3; grid-column: 5;">4<small>CODE</small></a>
+            <a class="tile quiz-tile theme-purple" data-level="5" href="quiz4.html" style="grid-row: 3; grid-column: 6;">5<small>QUIZ</small></a>
+            <a class="tile quiz-tile theme-pink" data-level="6" href="code2.html" style="grid-row: 3; grid-column: 7;">6<small>CODE</small></a>
 
-        <!-- Top row: right to left, then END -->
-        <div class="tile" style="grid-row: 1; grid-column: 7;">8</div>
-        <div class="tile" style="grid-row: 1; grid-column: 6;">9</div>
-        <div class="tile" style="grid-row: 1; grid-column: 5;">10</div>
-        <div class="tile" style="grid-row: 1; grid-column: 4;">11</div>
-        <div class="tile" style="grid-row: 1; grid-column: 3;">12</div>
-        <div class="tile" style="grid-row: 1; grid-column: 2;">13</div>
-        <div class="tile end" style="grid-row: 1; grid-column: 1;">🍁<br>END</div>
+            <!-- Right side: going up -->
+            <a class="tile quiz-tile theme-green" data-level="7" href="code3.html" style="grid-row: 2; grid-column: 7;">7<small>CODE</small></a>
+
+            <!-- Top row: right to left, then END -->
+            <a class="tile quiz-tile theme-blue" data-level="8" href="code4.html" style="grid-row: 1; grid-column: 7;">8<small>CODE</small></a>
+            <a class="tile quiz-tile theme-red" data-level="9" href="quiz5.html" style="grid-row: 1; grid-column: 6;">9<small>QUIZ</small></a>
+            <a class="tile quiz-tile theme-purple" data-level="10" href="code5.html" style="grid-row: 1; grid-column: 5;">10<small>CODE</small></a>
+            <a class="tile quiz-tile theme-pink" data-level="11" href="code6.html" style="grid-row: 1; grid-column: 4;">11<small>CODE</small></a>
+            <a class="tile quiz-tile theme-green" data-level="12" href="code7.html" style="grid-row: 1; grid-column: 3;">12<small>CODE</small></a>
+            <a class="tile quiz-tile theme-blue" data-level="13" href="code8.html" style="grid-row: 1; grid-column: 2;">13<small>CODE</small></a>
+            <a class="tile end" href="end.html" style="grid-row: 1; grid-column: 1;">END</a>
+        </div>
+
+        <p class="legend">QUIZ = Multiple Choice &nbsp;&nbsp; CODE = Coding Challenge &nbsp;&nbsp; ✓ = Done!</p>
+        <button class="reset-progress" id="resetProgress">Reset progress</button>
     </div>
+
+    <script>
+        // Mark finished squares and count progress
+        let done = 0;
+        document.querySelectorAll(".quiz-tile[data-level]").forEach((tile) => {
+            if (localStorage.getItem("done-" + tile.dataset.level)) {
+                tile.classList.add("done");
+                done++;
+            }
+        });
+        document.getElementById("progress").textContent = done + " of 13 squares complete";
+
+        // Lets a teacher clear everything for the next group
+        document.getElementById("resetProgress").addEventListener("click", () => {
+            if (confirm("Erase all progress, saved code, and team writing on this computer?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        });
+    </script>
 </body>
 </html>

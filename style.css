@@ -1,7 +1,34 @@
-/* Load the font. The path must be wrapped in url() */
+/* Load the font */
 @font-face {
     font-family: myFont;
-    src: url('Fonts/Patika-Medium.34b97a6c.woff2') format('woff2');
+    src: url('Goga-Semibold.30b83a68.woff2') format('woff2');
+}
+
+/* ---------- Color themes ---------- */
+/* --main is the bright color, --light is a soft version of it */
+:root, .theme-pink {
+    --main: #ff99ff;
+    --light: #ffd6f0;
+}
+
+.theme-green {
+    --main: #5cd65c;
+    --light: #d4f7d4;
+}
+
+.theme-blue {
+    --main: #5da9ff;
+    --light: #d6e9ff;
+}
+
+.theme-red {
+    --main: #ff6b6b;
+    --light: #ffd9d9;
+}
+
+.theme-purple {
+    --main: #b57edc;
+    --light: #ecdcf7;
 }
 
 /* Use myFont for everything, including buttons */
@@ -10,8 +37,7 @@ body, button {
 }
 
 body {
-    /* Set a very light, clean background color */
-    background-color: #f9f9f9; 
+    background-color: #f9f9f9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,53 +46,63 @@ body {
 }
 
 .sketch-page {
-    /* Define the page area */
     width: 80%;
     max-width: 700px;
     min-height: 800px;
     padding: 50px;
+    margin: 50px;
     box-sizing: border-box;
-    
-    /* --- Clean Page Look --- */
-    background-color: #ff99ff; /* Pink page */
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    background-color: var(--main);
+
+    /* A frame made of all five colors */
+    box-shadow:
+        0 0 0 8px #ff99ff,
+        0 0 0 16px #5cd65c,
+        0 0 0 24px #5da9ff,
+        0 0 0 32px #ff6b6b,
+        0 0 0 40px #b57edc;
 }
 
 .text-block {
-    margin-bottom: 100px; /* Increased spacing */
-    text-align: center;   /* Centers the title and subtitle like your sketch */
+    margin-bottom: 100px;
+    text-align: center;
 }
 
 .title {
     font-size: 2.8em;
-    color: #222; /* Darker text for contrast */
+    color: #222;
     margin-bottom: 15px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .subtitle {
     font-size: 1.3em;
-    color: #555;
+    color: #333;
 }
 
-/* Styling the "START" Circle */
+/* The START circle */
 .start-circle {
-    position: relative; /* Keeps the ::before ring inside the circle */
+    position: relative;
     width: 250px;
     height: 250px;
-    border: 3px dashed #333; /* Dashed line simulates a pencil sketch */
+    border: 3px dashed #333;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: transparent;
     cursor: pointer;
-    font-size: 3.5em; /* Bigger text for impact */
+    font-size: 3.5em;
     color: #333;
     margin: 0 auto;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-/* Subtle inner ring */
+.start-circle:hover {
+    background-color: #5da9ff;
+    transform: scale(1.05);
+}
+
 .start-circle::before {
     content: '';
     position: absolute;
@@ -76,9 +112,5 @@ body {
     height: 80%;
     border: 2px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
-    pointer-events: none; /* Ensures clicks go through to the circle */
-}
-
-button {
-  font-family: myFont;
+    pointer-events: none;
 }

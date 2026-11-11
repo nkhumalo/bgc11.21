@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 3</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="7" class="theme-green">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 3 of 8</p>
+            <h1>Turning Tokens into Numbers</h1>
+            <p>Computers can't do math with words, so every token gets its own ID number. The list of all known tokens and their numbers is called a <strong>vocabulary</strong>. After this step, your sentence is just a list of numbers. That's all the chatbot ever "reads"!</p>
+            <p class="mission"><strong>Your mission:</strong> Replace <code>pass</code> with <code>ids.append(vocab[token])</code> and click Run. Then change <code>text</code> to your own sentence. Notice how repeated words get the same number!</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+text = "the cat sat on the mat and the cat ate pie"
+tokens = text.split()
+
+# Build the vocabulary: give each NEW token the next number
+vocab = {}
+for token in tokens:
+    if token not in vocab:
+        vocab[token] = len(vocab)
+
+print("Vocabulary:", vocab)
+
+# Turn every token into its ID number
+ids = []
+for token in tokens:
+    pass   # TODO: replace pass with: ids.append(vocab[token])
+
+print("Your text as words:  ", tokens)
+print("Your text as numbers:", ids)
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> <code>vocab[token]</code> looks up a token's number, and <code>ids.append(...)</code> adds that number to the end of the list. Keep the line indented 4 spaces.</p>
+    </div>
+
+<script type="text/plain" id="check">
+bool(len(ids) > 0 and ids == [vocab[t] for t in tokens])
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

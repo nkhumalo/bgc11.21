@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 5</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="10" data-save-team="true" class="theme-purple">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 5 of 8</p>
+            <h1>Feed the AI Your Team's Writing</h1>
+            <p>Time for supervised learning! Your AI needs labeled examples. Each sentence is an example, and the writer's name is the label. Write the way you naturally write, with your favorite words, slang, and punctuation. The more unique your voice, the easier it is for the AI to recognize you.</p>
+            <p class="mission"><strong>Your mission:</strong> Each teammate changes one <code>"Name"</code> to their first name, keeping the quotes. Then delete the practice sentences and type at least 3 of your own, one per line, between the <code>"""</code> marks. Topic idea: describe your dream Thanksgiving plate! Click Run when everyone is done.</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+# SUPERVISED LEARNING needs LABELED examples.
+# The LABEL is who wrote it. The EXAMPLE is what they wrote.
+#
+# 1. Change "Name 1" to your first name. Keep the quotes!
+# 2. Delete the practice sentences and type your own,
+#    one sentence per line, between the """ marks.
+
+#  Teammate 1  
+name1 = "Name 1"
+writing1 = """
+Write a sentence here.
+Write a sentence here.
+Write a sentence here.
+"""
+
+#  Teammate 2  
+name2 = "Name 2"
+writing2 = """
+Write a sentence here.
+Write a sentence here.
+Write a sentence here.
+"""
+
+#  Teammate 3  
+name3 = "Name 3"
+writing3 = """
+Write a sentence here.
+Write a sentence here.
+Write a sentence here.
+"""
+
+#  Teammate 4 (only if your team has 4 people)  
+name4 = ""
+writing4 = """
+"""
+
+#  You don't need to change anything below this line  
+team_writing = make_team(name1, writing1, name2, writing2, name3, writing3, name4, writing4)
+show_team(team_writing)
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> Every name needs to be changed from "Name 1," "Name 2," and "Name 3," and the quotes around each name must stay. Each person needs at least 3 sentences, and none of them can still say "Write a sentence here." Make sure each set of <code>"""</code> marks is still there.</p>
+    </div>
+
+<script type="text/plain" id="setup">
+def make_team(*parts):
+    team = {}
+    for i in range(0, len(parts), 2):
+        name = parts[i].strip()
+        writing = parts[i + 1]
+        sentences = [line.strip() for line in writing.split("\n") if line.strip() != ""]
+        if name != "":
+            team[name] = sentences
+    return team
+
+def show_team(team):
+    for name, sentences in team.items():
+        words = sum(len(s.split()) for s in sentences)
+        print(name, "wrote", len(sentences), "sentences and", words, "words")
+</script>
+
+<script type="text/plain" id="check">
+ok = len(team_writing) >= 2
+for name, sentences in team_writing.items():
+    if name.startswith("Name") or len(sentences) < 3:
+        ok = False
+    for s in sentences:
+        if "sentence here" in s:
+            ok = False
+ok
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

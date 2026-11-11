@@ -1,0 +1,246 @@
+/* game.css: shared styles for the quiz and coding pages */
+
+body {
+    padding: 40px 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Back to Board button ---------- */
+.back-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 26px;
+    background-color: var(--main);
+    color: black;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 30px;
+    font-size: 1.1em;
+}
+
+.back-button:hover {
+    background-color: var(--light);
+}
+
+/* ---------- Quiz pages ---------- */
+.quiz-block {
+    background-color: #000000;
+    color: var(--light);
+    width: 80%;
+    max-width: 700px;
+    padding: 50px 60px;
+    box-sizing: border-box;
+    border-top: 12px solid var(--main);
+}
+
+.question-number {
+    color: var(--main);
+}
+
+.question {
+    font-size: 2.2em;
+    line-height: 1.2;
+    margin: 0 0 40px 0;
+}
+
+.answer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: none;
+    border: none;
+    color: var(--light);
+    font-size: 1.2em;
+    text-align: left;
+    padding: 0;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.box {
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
+    border: 4px solid var(--main);
+    border-radius: 6px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4em;
+    color: black;
+}
+
+.answer:hover .box {
+    background-color: var(--light);
+}
+
+.answer.correct .box {
+    background-color: #2e9e44;
+    border-color: #2e9e44;
+    color: white;
+}
+
+.answer.wrong .box {
+    background-color: #d62828;
+    border-color: #d62828;
+    color: white;
+}
+
+.feedback {
+    font-size: 1.3em;
+    margin-top: 20px;
+    min-height: 1.5em;
+}
+
+.explain {
+    background-color: var(--light);
+    color: black;
+    padding: 15px 20px;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+/* ---------- Coding pages ---------- */
+.code-page {
+    width: 90%;
+    max-width: 1000px;
+}
+
+.instructions {
+    background-color: black;
+    color: var(--light);
+    padding: 30px 40px;
+    border-radius: 10px;
+    border-top: 12px solid var(--main);
+    line-height: 1.5;
+    font-size: 1.1em;
+}
+
+.instructions h1 {
+    font-size: 2em;
+    line-height: 1.2;
+    margin: 0 0 15px 0;
+}
+
+.challenge-number {
+    color: var(--main);
+    margin: 0;
+}
+
+.instructions code {
+    font-family: 'Courier New', monospace;
+    background-color: #333;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.mission {
+    background-color: var(--main);
+    color: black;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 0;
+}
+
+.mission code {
+    background-color: black;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 10px 0;
+}
+
+.toolbar button {
+    padding: 12px 26px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.toolbar .back-button {
+    margin-top: 0;
+    margin-left: auto;
+}
+
+#run {
+    background-color: var(--main);
+    color: black;
+    border: 2px solid black;
+}
+
+#run:hover {
+    background-color: var(--light);
+}
+
+#run:disabled {
+    background-color: #999;
+    cursor: wait;
+}
+
+#reset {
+    background-color: white;
+    border: 2px solid black;
+}
+
+/* The code editor */
+#code {
+    width: 100%;
+    min-height: 380px;
+    box-sizing: border-box;
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 20px;
+    background-color: #1e1e1e;
+    color: #f8f8f2;
+    border: 3px solid black;
+    border-left: 12px solid var(--main);
+    border-radius: 10px;
+    resize: vertical;
+    tab-size: 4;
+}
+
+.label {
+    font-size: 1.2em;
+    margin: 15px 0 5px 0;
+}
+
+/* Where the Python output shows up */
+#output {
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 120px;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+#status {
+    font-size: 1.3em;
+}
+
+#status.pass {
+    color: #2e7d32;
+}
+
+#status.fail {
+    color: #b00000;
+}
+
+#hint {
+    background-color: var(--light);
+    border-left: 6px solid var(--main);
+    padding: 15px 20px;
+    border-radius: 6px;
+    line-height: 1.5;
+}

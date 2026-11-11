@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 8</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="13" class="theme-blue">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 8 of 8</p>
+            <h1>Score Your AI and Share Your Findings</h1>
+            <p>Scientists don't test an AI with just one sentence. They test it with lots of new examples where they already know the right answer, then measure the accuracy, which is the percent the AI got right. Then they share what they found.</p>
+            <p class="mission"><strong>Your mission:</strong> Click Run once to see your team's names. Then each teammate fills in 2 <code>test</code> lines with a new sentence and their name, spelled exactly like the output shows. Run it to see your accuracy, fill in your findings at the bottom, and run again. Share your Findings Report with the other teams!</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+# The AI model is already loaded and running behind the scenes.
+print("Your team:", team_names())
+print()
+
+#   STEP 1: Test the AI  
+# Each teammate fills in 2 lines like this:
+#     test("a new sentence you wrote", "your name")
+# Your name must be spelled exactly like it is printed above.
+
+test("Write a new sentence here", "Name 1")
+test("Write a new sentence here", "Name 1")
+test("Write a new sentence here", "Name 2")
+test("Write a new sentence here", "Name 2")
+test("Write a new sentence here", "Name 3")
+test("Write a new sentence here", "Name 3")
+# Got a 4th teammate? Copy a test line and paste it here.
+
+print()
+print("The AI got", number_correct(), "out of", number_tested(), "right.")
+print("Accuracy:", accuracy(), "%")
+
+#   STEP 2: Write your findings between the quotes  
+team_name = ""
+easiest_voice_to_spot = ""        # whose writing did the AI recognize best?
+what_made_voices_different = ""   # words, punctuation, slang, sentence length?
+what_we_learned = ""              # what did you learn about AI and your own voice?
+
+print()
+print("==================================================")
+print("FINDINGS REPORT:", team_name)
+print("==================================================")
+print("AI accuracy:", accuracy(), "%")
+print("Easiest voice to spot:", easiest_voice_to_spot)
+print("What made our voices different:", what_made_voices_different)
+print("What we learned:", what_we_learned)
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> Every teammate needs at least one test line with a real sentence, and the name must exactly match a name from your team (capital letters count!). If you see "isn't on your team," check the spelling of that name. Don't forget to type your answers inside the quotes for <code>team_name</code>, <code>what_made_voices_different</code>, and <code>what_we_learned</code>.</p>
+    </div>
+
+<script type="text/plain" id="setup">
+import math
+from collections import Counter
+
+def get_tokens(text):
+    text = text.lower()
+    for mark in ".,!?;:":
+        text = text.replace(mark, " " + mark + " ")
+    return text.split()
+
+profiles = {}
+for name, samples in team_writing.items():
+    counts = Counter()
+    for sample in samples:
+        counts.update(get_tokens(sample))
+    profiles[name] = counts
+
+all_tokens = set()
+for counts in profiles.values():
+    all_tokens.update(counts)
+
+def voice_score(text, counts):
+    total = sum(counts.values())
+    score = 0
+    for token in get_tokens(text):
+        chance = (counts[token] + 1) / (total + len(all_tokens))
+        score = score + math.log(chance)
+    return score
+
+def guess_writer(text):
+    scores = {}
+    for name, counts in profiles.items():
+        scores[name] = voice_score(text, counts)
+    best = max(scores, key=scores.get)
+    return best, scores
+
+results = []
+
+def team_names():
+    return list(team_writing.keys())
+
+def test(sentence, real_writer):
+    if real_writer not in profiles:
+        print("Hmm,", real_writer, "isn't on your team. Check the spelling! Your team is:", team_names())
+        return
+    guess, scores = guess_writer(sentence)
+    if guess == real_writer:
+        print("RIGHT | Real:", real_writer, "| AI guessed:", guess, "|", sentence)
+    else:
+        print("WRONG | Real:", real_writer, "| AI guessed:", guess, "|", sentence)
+    results.append((sentence, real_writer, guess == real_writer))
+
+def number_tested():
+    return len(results)
+
+def number_correct():
+    return sum(1 for r in results if r[2])
+
+def accuracy():
+    if len(results) == 0:
+        return 0
+    return round(number_correct() / len(results) * 100)
+</script>
+
+<script type="text/plain" id="check">
+bool(len(set(r[1] for r in results)) >= len(team_writing)
+     and all("new sentence here" not in r[0] for r in results)
+     and team_name.strip()
+     and what_made_voices_different.strip()
+     and what_we_learned.strip())
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

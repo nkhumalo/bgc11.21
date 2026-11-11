@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 6</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="11" class="theme-pink">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 6 of 8</p>
+            <h1>Fix the AI Model</h1>
+            <p>This code trains your AI by building a "voice profile" for each teammate, which counts how often they use each word and punctuation mark. How you use "!" or "?" is part of your voice too! But the code has 3 bugs. Your team's writing from square 10 loads automatically.</p>
+            <p class="mission"><strong>Your mission:</strong> Find the 3 lines marked <code>BUG</code>. Each one needs only a tiny change, and the comment at the end of the line tells you what to do. Fix all 3, then click Run. Look at each teammate's favorite words. Do they show your voice?</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+# Your team's writing from square 10 is already loaded
+# into a variable called team_writing.
+from collections import Counter
+
+print("Training on writing from:", list(team_writing.keys()))
+print()
+
+# STEP 1: Turn text into tokens
+def get_tokens(text):
+    text = text.upper()   # BUG 1: upper makes letters BIG. Change upper to lower
+    for mark in ".,!?;:":
+        text = text.replace(mark, " " + mark + " ")
+    return text.split()
+
+# STEP 2: Build a voice profile for each teammate
+profiles = {}
+for name, samples in team_writing.items():
+    counts = Counter()
+    for sample in samples:
+        counts.update(get_tokens(samples))   # BUG 2: change samples to sample (remove the s)
+    profile[name] = counts                   # BUG 3: change profile to profiles (add an s)
+
+# STEP 3: Show each teammate's favorite tokens
+for name, counts in profiles.items():
+    print(name, "uses these tokens the most:")
+    print("   ", counts.most_common(5))
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> Fix the bugs one at a time and only change the word the comment talks about. Why these bugs matter: Bug 1 makes "Pie" and "pie" count as different words. Bug 2 tries to read the whole list of sentences at once instead of one sentence at a time. Bug 3 uses a name Python has never heard of, because the dictionary is called <code>profiles</code>.</p>
+    </div>
+
+<script type="text/plain" id="check">
+bool(get_tokens("Hi THERE!") == ["hi", "there", "!"] and len(profiles) == len(team_writing) and all(sum(c.values()) > 0 for c in profiles.values()))
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

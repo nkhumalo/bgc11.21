@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 3: Binary Code</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="3" class="theme-blue">
+    <div class="quiz-block">
+        <h1 class="question">
+            <span class="question-number">Question 3 of 5</span>
+            What is binary code?
+        </h1>
+
+        <button class="answer"><span class="box"></span>A secret language that only robots can speak out loud</button>
+        <button class="answer"><span class="box"></span>Computer code that has exactly two lines in it</button>
+        <button class="answer"><span class="box"></span>A type of password made of letters and symbols</button>
+        <button class="answer" data-correct="true"><span class="box"></span>A way of writing information using only two digits, 0 and 1, that computers understand</button>
+
+        <p class="feedback" id="feedback"></p>
+        <p class="explain" id="explain" hidden>Deep down, computers only understand "on" (1) and "off" (0). Every letter you type is stored as a number, and every number is stored in binary. For example, the letter A is 01000001.</p>
+
+        <a class="back-button" href="path.html">← Back to Board</a>
+    </div>
+    <script src="quiz.js"></script>
+</body>
+</html>

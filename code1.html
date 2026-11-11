@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 1</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="4" class="theme-red">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 1 of 8</p>
+            <h1>How Computers "Read": Letters to Binary</h1>
+            <p>When you type a message to a chatbot, it never actually sees letters. Every letter is stored as a number, and every number is stored in binary (only 0s and 1s). Let's see your name the way a computer sees it!</p>
+            <p class="mission"><strong>Your mission:</strong> First, change <code>word</code> to your name and click Run. Then finish the secret message decoder by replacing the TODO 2 line with <code>message = message + chr(number)</code> and run it again.</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+# Computers can't read letters. They only understand numbers!
+# ord() turns a letter into its number.
+# format(number, "08b") shows that number in binary.
+
+word = "Hi"   # TODO 1: change "Hi" to your name
+
+for letter in word:
+    number = ord(letter)
+    binary = format(number, "08b")
+    print(letter, "->", number, "->", binary)
+
+print()
+
+# Now go backwards! Decode this secret message from binary.
+secret = ["01000001", "01001001", "00100000", "01010010",
+          "01001111", "01000011", "01001011", "01010011"]
+
+message = ""
+for code in secret:
+    number = int(code, 2)   # turns binary back into a number
+    # TODO 2: replace this line with: message = message + chr(number)
+
+print("Secret message:", message)
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> Make sure <code>word</code> isn't "Hi" anymore. For TODO 2, the new line must be indented 4 spaces so it's inside the loop, just like the line above it.</p>
+    </div>
+
+<script type="text/plain" id="check">
+bool(word != "Hi" and len(word) > 0 and message == "AI ROCKS")
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

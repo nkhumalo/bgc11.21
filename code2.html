@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 2</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="6" class="theme-pink">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 2 of 8</p>
+            <h1>Chopping Text into Tokens</h1>
+            <p>AI chatbots don't read whole sentences the way you do. The first thing they do is chop text into small pieces called tokens. Real chatbots split long words into pieces, like "chatbots" becoming "chat" + "bots." We'll keep it simple and use whole words.</p>
+            <p class="mission"><strong>Your mission:</strong> Replace <code>tokens = []</code> with <code>tokens = clean.split()</code> and click Run. Then change <code>sentence</code> to something you would say and run it again. How many tokens did you get?</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+sentence = "AI chatbots do not read like people do. They read tokens!"
+
+# Step 1: make everything lowercase, so "They" and "they" match
+clean = sentence.lower()
+
+# Step 2: remove punctuation
+for mark in ".,!?":
+    clean = clean.replace(mark, "")
+
+print("Cleaned up:", clean)
+
+# Step 3: split the text into tokens
+tokens = []   # TODO: replace [] with clean.split()
+
+print("Tokens:", tokens)
+print("Number of tokens:", len(tokens))
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> The line should look exactly like this: <code>tokens = clean.split()</code>. The <code>split()</code> function cuts text wherever there's a space.</p>
+    </div>
+
+<script type="text/plain" id="check">
+bool(len(tokens) > 0 and tokens == clean.split())
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

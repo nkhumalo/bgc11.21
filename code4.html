@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge 4</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body data-level="8" class="theme-blue">
+    <div class="code-page">
+        <div class="instructions">
+            <p class="challenge-number">Coding Challenge 4 of 8</p>
+            <h1>How Chatbots "Write": Guessing the Next Word</h1>
+            <p>Here's the big secret: chatbots don't plan out what they want to say. They look at the words so far and guess what word probably comes next, one word at a time. This mini chatbot learns which words follow which, then writes by guessing. Real chatbots do the same thing with billions of words and much fancier math.</p>
+            <p class="mission"><strong>Your mission:</strong> Add at least two of your own sentences to <code>training_text</code> and click Run a few times. Put a space before each period, like <code>i love stuffing .</code> How does the chatbot's writing change with your new data?</p>
+        </div>
+
+        <div class="toolbar">
+            <button id="run">Run Code</button>
+            <button id="reset">Reset</button>
+            <a class="back-button" href="path.html">← Back to Board</a>
+        </div>
+
+        <textarea id="code" spellcheck="false">
+import random
+
+# TODO: add your own sentences inside the triple quotes!
+training_text = """
+i love pie . i love turkey . i love my family .
+my family loves pie . turkey is tasty . pie is tasty .
+"""
+
+words = training_text.split()
+
+# Learn which words come after each word
+next_words = {}
+for i in range(len(words) - 1):
+    current = words[i]
+    following = words[i + 1]
+    if current not in next_words:
+        next_words[current] = []
+    next_words[current].append(following)
+
+print("After 'i' the chatbot has seen:", next_words["i"])
+print("After 'love' the chatbot has seen:", next_words["love"])
+print()
+
+# Now the "chatbot" writes by guessing one word at a time
+word = "i"
+sentence = [word]
+for step in range(10):   # change 10 to make it write more or less
+    if word not in next_words:
+        break
+    word = random.choice(next_words[word])
+    sentence.append(word)
+
+print("Chatbot wrote:", " ".join(sentence))
+</textarea>
+
+        <p class="label">Output:</p>
+        <pre id="output"></pre>
+        <p id="status"></p>
+        <p id="hint" hidden><strong>Hint:</strong> Type your new sentences on a new line between the two sets of <code>"""</code>. Use lowercase words and put spaces around the periods so they count as their own tokens.</p>
+    </div>
+
+<script type="text/plain" id="check">
+bool(len(words) > 26)
+</script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="coder.js"></script>
+</body>
+</html>

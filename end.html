@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Made It!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+    <style>
+        .end-page {
+            text-align: center;
+            min-height: auto;
+        }
+
+        .end-message {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #222;
+        }
+    </style>
+</head>
+<body class="theme-purple">
+    <div class="sketch-page end-page">
+        <div class="text-block">
+            <p class="title">YOU MADE IT!</p>
+            <p class="subtitle" id="score"></p>
+        </div>
+
+        <p class="end-message">AI chatbots don't think. They turn text into tokens, tokens into numbers, and then predict what comes next. But you just proved that every person has a unique written voice. In a world full of AI text, your voice is what makes you stand out. Keep writing!</p>
+
+        <a class="back-button theme-blue" href="path.html">← Back to Board</a>
+    </div>
+
+    <script>
+        let done = 0;
+        for (let i = 1; i <= 13; i++) {
+            if (localStorage.getItem("done-" + i)) done++;
+        }
+        document.getElementById("score").textContent =
+            done === 13 ? "You completed all 13 squares!" : "You completed " + done + " of 13 squares. Go back and finish the rest!";
+    </script>
+</body>
+</html>
